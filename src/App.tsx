@@ -24,7 +24,7 @@ function App() {
   // FUNCIÓN CENTRAL
   const fetchTasks = async () => {
     try {
-      const res = await fetch("http://localhost:3000/tasks");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/tasks`);
       const data = await res.json();
       setTasks(data);
     } catch (error) {
@@ -46,7 +46,7 @@ function App() {
       return;
     }
 
-    await fetch("http://localhost:3000/tasks", {
+    await fetch(`${import.meta.env.VITE_API_URL}/tasks`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -63,7 +63,7 @@ function App() {
     return;
   }
 
-  await fetch(`http://localhost:3000/tasks/edit/${id}`, {
+  await fetch(`${import.meta.env.VITE_API_URL}/tasks/edit/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -76,7 +76,7 @@ function App() {
 
   // ✅ DELETE
   const deleteTask = async (id: number) => {
-    await fetch(`http://localhost:3000/tasks/${id}`, {
+    await fetch(`${import.meta.env.VITE_API_URL}/tasks/${id}`, {
       method: "DELETE",
     });
 
@@ -85,7 +85,7 @@ function App() {
 
   // ✅ PUT
   const toggleTask = async (id: number) => {
-    await fetch(`http://localhost:3000/tasks/${id}`, {
+    await fetch(`${import.meta.env.VITE_API_URL}/tasks/${id}`, {
       method: "PUT",
     });
 
@@ -101,7 +101,7 @@ function App() {
 
   // 🔐 probar ruta privada
   const testPrivate = async () => {
-    const res = await fetch("http://localhost:3000/private", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/private`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
