@@ -134,7 +134,7 @@ app.post("/login", (req: any, res: any) => {
   // obtener  username y password
   const { username, password } = req.body;
   // validar credenciales
-  if (username !== "admin" || password !== "password") {
+  if (username !== "admin" || password !== "12345") {
     return res.status(401).json({ message: "Credenciales inválidas" });
   }
   //generar token JWT
