@@ -107,6 +107,28 @@ app.put("/tasks/:id", async (req: any, res: any) => {
 
 });
 
+// ✏️ EDITAR TEXTO DE TAREA
+app.put("/tasks/edit/:id", async (req: any, res: any) => {
+  try {
+    const id = Number(req.params.id);
+    const { text } = req.body;
+
+    if (!text || text.trim() === "") {
+      return res.status(400).json({ message: "Texto vacío" });
+    }
+
+    const updatedTask = await prisma.task.update({
+      where: { id },
+      data: { text },
+    });
+
+    res.json(updatedTask);
+  } catch (error) {
+    console.error("Error al editar tarea:", error);
+    res.status(500).json({ message: "Error al editar tarea" });
+  }
+});
+
 //login para autenticación (ejemplo simple sin base de datos)
 app.post("/login", (req: any, res: any) => {
   // obtener  username y password

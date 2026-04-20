@@ -17,16 +17,11 @@ type Filter = "todos" | "pendiente" | "completado";
 function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [filter, setFilter] = useState<Filter>("todos");
-
   const [token, setToken] = useState<string | null>(
     localStorage.getItem("token")
   );
-  if (!token) {
-    return <Login onLogin={setToken} />;
-  }
-  
 
-  // 🔥 FUNCIÓN CENTRAL (IMPORTANTE)
+  // FUNCIÓN CENTRAL
   const fetchTasks = async () => {
     try {
       const res = await fetch("http://localhost:3000/tasks");
@@ -37,57 +32,83 @@ function App() {
     }
   };
 
-  // ✅ Cargar tareas al iniciar
+  //cargar tareas después del login
   useEffect(() => {
-    fetchTasks();
-  }, []);
+    if (token) {
+      fetchTasks();
+    }
+  }, [token]);
 
-  // ✅ POST
+  // POST
   const addTask = async (task: string) => {
     if (!task.trim()) {
       alert("La tarea no puede estar vacía");
       return;
     }
 
-    try {
-      await fetch("http://localhost:3000/tasks", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ text: task }),
-      });
+    await fetch("http://localhost:3000/tasks", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text: task }),
+    });
 
-      fetchTasks(); // 🔥 sincronizar
-    } catch (error) {
-      console.error("Error al agregar tarea:", error);
-    }
+    fetchTasks();
   };
+  // PUT para editar texto de tarea
+  const editTask = async (id: number, newText: string) => {
+  if (!newText.trim()) {
+    alert("No puede estar vacío");
+    return;
+  }
 
-  // ✅ DELETE (AHORA CON BACKEND)
+  await fetch(`http://localhost:3000/tasks/edit/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ text: newText }),
+  });
+
+  fetchTasks();
+};
+
+  // ✅ DELETE
   const deleteTask = async (id: number) => {
-    try {
-      await fetch(`http://localhost:3000/tasks/${id}`, {
-        method: "DELETE",
-      });
+    await fetch(`http://localhost:3000/tasks/${id}`, {
+      method: "DELETE",
+    });
 
-      fetchTasks(); // 🔥 sincronizar
-    } catch (error) {
-      console.error("Error al eliminar tarea:", error);
-    }
+    fetchTasks();
   };
 
-  // ✅ PUT (TOGGLE COMPLETED)
+  // ✅ PUT
   const toggleTask = async (id: number) => {
-    try {
-      await fetch(`http://localhost:3000/tasks/${id}`, {
-        method: "PUT",
-      });
+    await fetch(`http://localhost:3000/tasks/${id}`, {
+      method: "PUT",
+    });
 
-      fetchTasks(); // 🔥 sincronizar
-    } catch (error) {
-      console.error("Error al actualizar tarea:", error);
-    }
+    fetchTasks();
+  };
+
+  // 🔥 logout
+  const logout = () => {
+    localStorage.removeItem("token");
+    setTasks([]);
+    setToken(null);
+  };
+
+  // 🔐 probar ruta privada
+  const testPrivate = async () => {
+    const res = await fetch("http://localhost:3000/private", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await res.json();
+    alert(data.message);
   };
 
   // 🔎 FILTROS
@@ -99,29 +120,39 @@ function App() {
 
   return (
     <div className="app">
-      <div className="container">
-        <Header />
+      {!token ? (
+        <Login onLogin={setToken} />
+      ) : (
+        <div className="container">
+          <Header />  
 
-        <TaskInput onAdd={addTask} />
+          <TaskInput onAdd={addTask} />
 
-        <div className="filters">
-          <button onClick={() => setFilter("todos")}>Todos</button>
-          <button onClick={() => setFilter("pendiente")}>Pendiente</button>
-          <button onClick={() => setFilter("completado")}>Completado</button>
+          <div className="filters">
+            <button onClick={() => setFilter("todos")}>Todos</button>
+            <button onClick={() => setFilter("pendiente")}>
+              Pendiente
+            </button>
+            <button onClick={() => setFilter("completado")}>
+              Completado
+            </button>
+          </div>
+
+          {filteredTasks.length === 0 ? (
+            <EmptyState />
+          ) : (
+            <TaskList
+              tasks={filteredTasks}
+              onDelete={deleteTask}
+              onToggle={toggleTask}
+              onEdit={editTask}
+            />
+          )}
+
+          <Footer total={tasks.length} />
+          <button onClick={logout}>Cerrar sesión</button>
         </div>
-
-        {filteredTasks.length === 0 ? (
-          <EmptyState />
-        ) : (
-          <TaskList
-            tasks={filteredTasks}
-            onDelete={deleteTask}
-            onToggle={toggleTask}
-          />
-        )}
-
-        <Footer total={tasks.length} />
-      </div>
+      )}
     </div>
   );
 }

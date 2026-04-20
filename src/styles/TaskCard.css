@@ -6,6 +6,16 @@
   display: flex;
   justify-content: space-between;
 }
+.actions{
+  display: flex;
+  gap: 5px;
+}
+.actions button {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
 
 .completed {
   text-decoration: line-through;
@@ -31,4 +41,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+}
+.task-card button {
+  margin-left: 5px;
 }

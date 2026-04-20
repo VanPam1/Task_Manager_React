@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../styles/Login.css";
 
 type Props = {
   onLogin: (token: string) => void;
@@ -9,6 +10,11 @@ function Login({ onLogin }: Props) {
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
+    if (!username || !password) {
+      alert("Completa los campos");
+      return;
+    }
+
     try {
       const res = await fetch("http://localhost:3000/login", {
         method: "POST",
@@ -25,9 +31,7 @@ function Login({ onLogin }: Props) {
         return;
       }
 
-      // 🔥 guardar token
       localStorage.setItem("token", data.token);
-
       onLogin(data.token);
 
     } catch (error) {
@@ -36,23 +40,25 @@ function Login({ onLogin }: Props) {
   };
 
   return (
-    <div className="login">
-      <h2>Login</h2>
+    <div className="login-container">
+      <div className="login-card">
+        <h2>Iniciar Sesión</h2>
 
-      <input
-        placeholder="Usuario"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
+        <input
+          placeholder="Usuario"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
 
-      <input
-        type="password"
-        placeholder="Contraseña"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+        <input
+          type="password"
+          placeholder="Contraseña"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-      <button onClick={handleLogin}>Ingresar</button>
+        <button onClick={handleLogin}>Ingresar</button>
+      </div>
     </div>
   );
 }

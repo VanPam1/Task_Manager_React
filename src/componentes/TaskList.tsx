@@ -5,17 +5,19 @@ type Props = {
   tasks: Task[];
   onDelete: (id: number) => void;
   onToggle: (id: number) => void;
+  onEdit: (id: number, text: string) => void;
 };
 
-function TaskList({ tasks, onDelete, onToggle }: Props) {
+function TaskList({ tasks, onDelete, onToggle, onEdit }: Props) {
   return (
     <ul>
       {tasks.map(task => (
         <TaskCard 
           key={task.id} 
           task={task}
-          onDelete={() => onDelete(task.id)}
-          onToggle={() => onToggle(task.id)}
+          onDelete={onDelete}
+          onToggle={onToggle}
+          onEdit={onEdit}
         />
       ))}
     </ul>
