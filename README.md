@@ -23,7 +23,7 @@ cd Task_Manager_React
 npm install
 ```
 
-## 3. Instalar dependencias del Backend
+## 3. Instalar dependencias del base de datos
 
 ```bash
 cd backend
