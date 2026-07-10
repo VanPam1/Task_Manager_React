@@ -11,7 +11,7 @@ Aplicación web para la gestión de tareas desarrollada con **React + Vite** en 
 ## 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/TU-USUARIO/TU-REPOSITORIO.git
+git clone https://github.com/VanPam1/Task_Manager_React.git
 cd Task_Manager_React
 ```
 
