@@ -15,13 +15,13 @@ export type Task = {
 type Filter = "todos" | "pendiente" | "completado";
 
 function App() {
+  const incidente = "prueba";
   const [tasks, setTasks] = useState<Task[]>([]);
   const [filter, setFilter] = useState<Filter>("todos");
   const [token, setToken] = useState<string | null>(
     localStorage.getItem("token")
   );
 
-  const prueba= "incidente de prueba";
 
   // FUNCIÓN CENTRAL
   const fetchTasks = async () => {
