@@ -21,6 +21,8 @@ function App() {
     localStorage.getItem("token")
   );
 
+  const prueba= "incidente de prueba";
+
   // FUNCIÓN CENTRAL
   const fetchTasks = async () => {
     try {
