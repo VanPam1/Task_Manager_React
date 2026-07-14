@@ -121,3 +121,9 @@ Task_Manager_React
 **Vania Patzi**
 
 Proyecto desarrollado para el Diplomado – Módulo 4: Integración y Despliegue Continuo.
+
+## Mejoras futuras
+
+- Agregar exportación de tareas.
+- Incorporar filtros avanzados por estado.
+- Mejorar la experiencia de usuario
