@@ -15,7 +15,6 @@ export type Task = {
 type Filter = "todos" | "pendiente" | "completado";
 
 function App() {
-  const incidente = "prueba";
   const [tasks, setTasks] = useState<Task[]>([]);
   const [filter, setFilter] = useState<Filter>("todos");
   const [token, setToken] = useState<string | null>(
@@ -26,6 +25,7 @@ function App() {
   // FUNCIÓN CENTRAL
   const fetchTasks = async () => {
     try {
+      console.log(import.meta.env.VITE_API_URL);
       const res = await fetch(`${import.meta.env.VITE_API_URL}/tasks`);
       const data = await res.json();
       setTasks(data);
