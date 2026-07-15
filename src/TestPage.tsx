@@ -21,7 +21,7 @@ export default function TestPage() {
         onChange={(e) => setText(e.target.value)}
       />
 
-      <button onClick={addTask}
+      <button onClick={addTask}>
         Agregar
       </button>
 
