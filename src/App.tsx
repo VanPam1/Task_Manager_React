@@ -21,9 +21,11 @@ function App() {
     localStorage.getItem("token")
   );
 
+
   // FUNCIÓN CENTRAL
   const fetchTasks = async () => {
     try {
+      console.log(import.meta.env.VITE_API_URL);
       const res = await fetch(`${import.meta.env.VITE_API_URL}/tasks`);
       const data = await res.json();
       setTasks(data);

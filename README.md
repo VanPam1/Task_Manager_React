@@ -2,7 +2,7 @@
 
 Aplicación web para la gestión de tareas desarrollada con **React + Vite** en el frontend y **Node.js + Express + Prisma** en el backend. Permite administrar tareas de forma sencilla mediante una interfaz moderna y una API conectada a una base de datos PostgreSQL.
 
-<!-- BADGE_CI -->
+[![CI](https://github.com/VanPam1/Task_Manager_React/actions/workflows/ci.yml/badge.svg)](https://github.com/VanPam1/Task_Manager_React/actions/workflows/ci.yml)
 
 ---
 
