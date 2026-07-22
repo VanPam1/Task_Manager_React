@@ -1,7 +1,11 @@
-node_modules
+node_modules/
+dist/
+coverage/
+
+backend/coverage/
 # Keep environment variables out of version control
 .env
-
+backend/.env/
 /src/generated/prisma
 
 # Playwright
