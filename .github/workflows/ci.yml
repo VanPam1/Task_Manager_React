@@ -135,7 +135,7 @@ jobs:
       - name: Desplegar backend a Railway Staging
         run: railway up --service Task_Manager_React --environment staging
         env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
 
 
   # ============================================================
@@ -160,4 +160,4 @@ jobs:
       - name: Desplegar backend a Railway Producción
         run: railway up --service Task_Manager_React --environment production
         env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
