@@ -7,6 +7,10 @@ describe("API", () => {
     const res = await request(app).get("/");
 
     expect(res.status).toBe(200);
-    expect(res.text).toBe("Backend is working!");
+
+    expect(res.body).toEqual({
+      status: "OK",
+      message: "Task Manager API funcionando en Railway",
+    });
   });
 });
