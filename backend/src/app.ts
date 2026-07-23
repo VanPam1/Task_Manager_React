@@ -7,7 +7,10 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Backend is working!");
+  res.json({
+    status: "OK",
+    message: "Task Manager API funcionando en Railway",
+  });
 });
 
 export default app;

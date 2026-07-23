@@ -3,20 +3,20 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   test: {
     globals: true,
-    environment: "jsdom",
+    environment: "node",
 
-    // Solo ejecutar pruebas de Vitest
     include: [
       "src/**/*.test.ts",
       "src/**/*.test.tsx",
-      "backend/tests/**/*.test.ts"
+      "tests/**/*.test.ts",
+      "tests/**/*.test.tsx",
     ],
 
-    // Ignorar Playwright
     exclude: [
       "e2e/**",
-      "backend/e2e/**",
-      "node_modules/**"
+      "node_modules/**",
+      "dist/**",
+      "coverage/**",
     ],
 
     coverage: {
