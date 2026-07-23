@@ -19,7 +19,7 @@ on:
 jobs:
 
   # ============================================================
-  # 1. VERIFICACIONES DEL FRONTEND
+  # 1. FRONTEND
   # ============================================================
   frontend:
     name: Frontend - Lint, Build y Pruebas
@@ -54,9 +54,8 @@ jobs:
       - name: Ejecutar pruebas E2E
         run: npx playwright test
 
-
   # ============================================================
-  # 2. VERIFICACIONES DEL BACKEND
+  # 2. BACKEND
   # ============================================================
   backend:
     name: Backend - Build, Pruebas y Migraciones
@@ -111,9 +110,8 @@ jobs:
       - name: Ejecutar pruebas del backend
         run: npm test
 
-
   # ============================================================
-  # 3. DESPLIEGUE AUTOMÁTICO A STAGING
+  # 3. DEPLOY AUTOMÁTICO A STAGING
   # ============================================================
   deploy-staging:
     name: Deploy a Staging
@@ -132,14 +130,22 @@ jobs:
       - name: Instalar Railway CLI
         run: npm install -g @railway/cli
 
-      - name: Desplegar backend a Railway Staging
-        run: railway up --service Task_Manager_React --environment staging --ci
+      - name: Vincular proyecto Railway
+        run: >
+          railway link
+          --project "${{ secrets.RAILWAY_PROJECT_ID }}"
+          --environment staging
+          --service Task_Manager_React
         env:
           RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
 
+      - name: Desplegar backend a Railway Staging
+        run: railway up --ci
+        env:
+          RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
 
   # ============================================================
-  # 4. DESPLIEGUE MANUAL A PRODUCCIÓN
+  # 4. DEPLOY MANUAL A PRODUCCIÓN
   # ============================================================
   deploy-produccion:
     name: Deploy a Producción Manual
@@ -157,7 +163,16 @@ jobs:
       - name: Instalar Railway CLI
         run: npm install -g @railway/cli
 
+      - name: Vincular proyecto Railway
+        run: >
+          railway link
+          --project "${{ secrets.RAILWAY_PROJECT_ID }}"
+          --environment production
+          --service Task_Manager_React
+        env:
+          RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
+
       - name: Desplegar backend a Railway Producción
-        run: railway up --service Task_Manager_React --environment production
+        run: railway up --ci
         env:
           RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
