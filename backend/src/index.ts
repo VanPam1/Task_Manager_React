@@ -166,6 +166,9 @@ const verifyToken = (req: any, res: any, next: any) => {
   }
 };
 
+// Simulación de fallo para el laboratorio
+throw new Error("Fallo simulado para el Laboratorio 3");
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
