@@ -10,24 +10,28 @@ export default defineConfig([
     '**/coverage/',
   ]),
 
-  js.configs.recommended,
-  ...tseslint.configs.recommended,
-
+  // Archivos TypeScript del backend
   {
     files: ['src/**/*.ts', 'tests/**/*.ts'],
 
+    extends: [
+      js.configs.recommended,
+      ...tseslint.configs.recommended,
+    ],
+
     languageOptions: {
+      parser: tseslint.parser,
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+
       globals: {
         ...globals.node,
-      },
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
       },
     },
 
     rules: {
       '@typescript-eslint/no-explicit-any': 'warn',
+
       '@typescript-eslint/no-unused-vars': [
         'error',
         {
@@ -35,6 +39,28 @@ export default defineConfig([
           varsIgnorePattern: '^_',
         },
       ],
+    },
+  },
+
+  // Seed de Prisma: JavaScript CommonJS para Node
+  {
+    files: ['prisma/**/*.js'],
+
+    extends: [
+      js.configs.recommended,
+    ],
+
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'commonjs',
+
+      globals: {
+        ...globals.node,
+      },
+    },
+
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
     },
   },
 ])
