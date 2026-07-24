@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import Header from "./componentes/Header";
 import TaskInput from "./componentes/TaskInput";
 import TaskList from "./componentes/TaskList";
@@ -33,13 +33,13 @@ function App() {
       console.error("Error al obtener tareas:", error);
     }
   };
-
+  /*
   //cargar tareas después del login
   useEffect(() => {
-    if (token) {
-      fetchTasks();
-    }
-  }, [token]);
+    if (token) return;
+      //eslint
+      void fetchTasks();
+  }, [token]);*/
 
   // POST
   const addTask = async (task: string) => {
@@ -101,17 +101,17 @@ function App() {
     setToken(null);
   };
 
-  // 🔐 probar ruta privada
+  /*// 🔐 probar ruta privada
   const testPrivate = async () => {
     const res = await fetch(`${import.meta.env.VITE_API_URL}/private`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    });
+    })
 
     const data = await res.json();
     alert(data.message);
-  };
+  };*/
 
   // 🔎 FILTROS
   const filteredTasks = tasks.filter((task) => {
