@@ -32,6 +32,11 @@ app.use(express.json());
 app.get("/", (req: any, res: any) => {
   res.send("Backend is working!");
 });
+
+app.get("/health", (req: any, res: any) => {
+  res.status(200).json({ status: "ok" });
+});
+
 //GET-Obtener todas las tareas
 app.get("/tasks", async (req: any, res: any) => {
   try {
