@@ -97,6 +97,8 @@ jobs:
 
       - name: Instalar dependencias
         run: npm ci
+      - name: Ejecutar lint del backend
+        run: npm run lint
 
       - name: Generar Prisma Client
         run: npx prisma generate
