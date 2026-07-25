@@ -14,7 +14,7 @@ dotenv.config()
 // Variables de entorno
 const DATABASE_URL = process.env.DATABASE_URL
 const SECRET_KEY = process.env.JWT_SECRET ?? 'mi_clave_secreta'
-const PORT = Number(process.env.PORT) || 3000
+const PORT = Number(process.env.PORT) 
 
 if (!DATABASE_URL) {
   throw new Error(
