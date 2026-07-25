@@ -10,6 +10,7 @@ export type Task = {
   id: number;
   text: string;
   completed: boolean;
+
 };
 
 type Filter = "todos" | "pendiente" | "completado";
